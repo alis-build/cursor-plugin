@@ -1,7 +1,7 @@
 {
   "name": "tools",
   "displayName": "Alis Build",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Connect Cursor to Alis Build through MCP tools and workspace context.",
   "author": {
     "name": "Alis Build"
@@ -9,7 +9,14 @@
   "homepage": "https://github.com/alis-build/cursor-plugin",
   "repository": "https://github.com/alis-build/cursor-plugin",
   "license": "MIT",
-  "keywords": ["alis-build", "cursor", "mcp", "builds", "deploys", "workspaces"],
+  "keywords": [
+    "alis-build",
+    "cursor",
+    "mcp",
+    "builds",
+    "deploys",
+    "workspaces"
+  ],
   "logo": "assets/alis.svg",
   "mcpServers": "mcp.json"
 }
