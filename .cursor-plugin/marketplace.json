@@ -1,23 +1,17 @@
 {
-  "name": "cursor-plugin-starters",
+  "name": "alis-build",
   "owner": {
-    "name": "Your Org",
-    "email": "plugins@example.com"
+    "name": "Alis Build"
   },
   "metadata": {
-    "description": "Starter marketplace template for Cursor plugins",
+    "description": "Alis Build plugins for Cursor",
     "version": "0.1.0"
   },
   "plugins": [
     {
-      "name": "starter-simple",
-      "source": "./plugins/starter-simple",
-      "description": "Minimal plugin with rules and skills only"
-    },
-    {
-      "name": "starter-advanced",
-      "source": "./plugins/starter-advanced",
-      "description": "Full-featured plugin with rules, skills, agents, commands, hooks, and MCP"
+      "name": "tools",
+      "source": "./plugins/tools",
+      "description": "Connect Cursor to Alis Build through MCP tools and workspace context."
     }
   ]
 }

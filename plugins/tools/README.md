@@ -1,21 +1,13 @@
-# Alis Build Cursor Plugin
+# Alis Build
 
-<p align="center">
-  <img src="plugins/tools/assets/connectivity.svg" alt="Cursor connected to Alis Build" width="760">
-</p>
-
-<p align="center">
-  <strong>Connect Cursor to Alis Build.</strong>
-</p>
-
-Use this plugin to let Cursor inspect Alis Build landing zones, products, neurons, builds, deploys, and related workspace context.
+Connect Cursor to Alis Build through hosted MCP tools, OAuth authentication, and workspace-aware build and deploy operations.
 
 ## What You Get
 
 - A preconfigured Cursor MCP server for `https://mcp.alis.build`
 - A preconfigured Alis Build OAuth client and scopes for MCP sign-in
 - OAuth/OIDC sign-in through `https://identity.alisx.com`
-- Alis Build tools available inside Cursor after sign-in
+- Alis Build tools for inspecting landing zones, products, neurons, builds, and deploys
 
 ## Before You Start
 
@@ -25,13 +17,9 @@ You need:
 - An Alis Build account with access to the landing zones and products you want to use
 - Network access to `https://mcp.alis.build` and `https://identity.alisx.com`
 
-## Install
-
-Install this repository as a Cursor plugin marketplace, then install the `tools` plugin from that marketplace.
-
 ## Use It
 
-After sign-in, ask Cursor to use Alis Build:
+After installing and signing in, ask Cursor to use Alis Build:
 
 ```text
 Use Alis Build to list the landing zones I can access.
@@ -43,12 +31,6 @@ Use Alis Build to inspect the current workspace, product, active neurons, and re
 
 ```text
 Use Alis Build to review the latest failed build or deploy logs and suggest the next action.
-```
-
-## Validate
-
-```sh
-node scripts/validate-template.mjs
 ```
 
 ## Troubleshooting
