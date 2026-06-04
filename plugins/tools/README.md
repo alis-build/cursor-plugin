@@ -5,7 +5,7 @@ Connect Cursor to Alis Build through hosted MCP tools, OAuth authentication, and
 ## What You Get
 
 - A preconfigured Cursor MCP server for `https://mcp.alis.build`
-- A preconfigured Alis Build OAuth client and scopes for MCP sign-in
+- A preconfigured static Alis Build OAuth client and scopes for MCP sign-in
 - OAuth/OIDC sign-in through `https://identity.alisx.com`
 - Alis Build tools for inspecting landing zones, products, neurons, builds, and deploys
 
@@ -37,4 +37,6 @@ Use Alis Build to review the latest failed build or deploy logs and suggest the 
 
 If `alis-build` does not appear as an MCP server, confirm the plugin install completed and that `plugins/tools/mcp.json` is present in this plugin.
 
-If sign-in fails, confirm that you can reach both `https://mcp.alis.build` and `https://identity.alisx.com`, then retry the MCP login flow in Cursor.
+If sign-in fails with `Incompatible auth server: does not support dynamic client registration`, confirm the installed plugin's MCP config contains `auth.CLIENT_ID`. Cursor uses that static OAuth client for Alis Build because the auth server does not support Dynamic Client Registration.
+
+If sign-in still fails, confirm that you can reach both `https://mcp.alis.build` and `https://identity.alisx.com`, then retry the MCP login flow in Cursor.

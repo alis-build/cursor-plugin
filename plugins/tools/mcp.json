@@ -3,8 +3,8 @@
     "alis-build": {
       "url": "https://mcp.alis.build",
       "oauth_resource": "https://mcp.alis.build",
-      "oauth": {
-        "client_id": "0de92454-0284-42a8-809b-ac426ab3dce5",
+      "auth": {
+        "CLIENT_ID": "0de92454-0284-42a8-809b-ac426ab3dce5",
         "scopes": ["build:read", "build:write"]
       },
       "startup_timeout_sec": 20,
