@@ -23,6 +23,14 @@ You need:
 After installing and signing in, ask Cursor to use Alis Build:
 
 ```text
+build it
+```
+
+```text
+fix it
+```
+
+```text
 Use Alis Build to list the landing zones I can access.
 ```
 
@@ -39,13 +47,12 @@ Use Alis Build to review the latest failed build or deploy logs and suggest the 
 This plugin includes Cursor rules for Alis Build workflow prompts:
 
 ```text
+build it
+fix it
 Use the getting-started skill to help me get started on Alis Build.
-Use Alis Build to add runtime agent skills to this ADK-Go agent.
-Use Alis Build to enable AG-UI for this ADK-Go agent.
-Use Alis Build to add a long-running ADK tool to this agent.
-Use Alis Build to add the scheduler extension to this ADK-Go agent.
-Use Alis Build to add a synchronous proto-backed tool to this ADK-Go agent.
 ```
+
+`build it` discovers the right Alis Build skill for the thing you want to build. `fix it` is an alias for the same discovery flow when the goal is framed as a fix.
 
 ## Troubleshooting
 
