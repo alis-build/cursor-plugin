@@ -1,0 +1,5 @@
+---
+description: Use when the user asks to get started with Alis Build or run the simpleapi quickstart.
+---
+
+Use the Alis Build MCP and the getting-started skill to help the user get started building on the Alis Build platform. Explain the proto -> define -> packages -> code -> build -> deploy lifecycle, then ask whether they want to run the simpleapi quickstart and guide them through the skill's workflow if they do.
