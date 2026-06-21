@@ -8,6 +8,7 @@ Connect Cursor to Alis Build through hosted MCP tools, OAuth authentication, and
 - A preconfigured static Alis Build OAuth client and scopes for MCP sign-in
 - OAuth/OIDC sign-in through `https://identity.alisx.com`
 - Alis Build tools for inspecting landing zones, products, neurons, builds, and deploys
+- An always-on Define → Build → Deploy primer rule so Cursor shares the Alis Build mental model
 
 ## Before You Start
 
