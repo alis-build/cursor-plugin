@@ -1,6 +1,5 @@
 ---
-description: Alis Build DBD mental model — the Define, Build, Deploy lifecycle and where things live. Always on.
-alwaysApply: true
+description: Alis Build DBD mental model — the Define, Build, Deploy lifecycle and where things live on disk. Attach whenever the user addresses Alis ("alis, ...") or asks to build, fix, define, deploy, or spec anything on the Alis Build platform.
 ---
 
 # Alis Build — Define, Build, Deploy (DBD)

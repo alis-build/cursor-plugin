@@ -8,7 +8,8 @@ Connect Cursor to Alis Build through hosted MCP tools, OAuth authentication, and
 - A preconfigured static Alis Build OAuth client and scopes for MCP sign-in
 - OAuth/OIDC sign-in through `https://identity.alisx.com`
 - Alis Build tools for inspecting landing zones, products, neurons, builds, and deploys
-- An always-on Define → Build → Deploy primer rule so Cursor shares the Alis Build mental model
+- A Define → Build → Deploy primer rule that Cursor pulls in when you engage Alis, so it shares the Alis Build mental model without always-on context
+- Skill-routing rules for `build it` / `fix it` (discover via `SearchSkills`) and `spec it` (call `SpecIt` directly)
 
 ## Before You Start
 
@@ -50,10 +51,11 @@ This plugin includes Cursor rules for Alis Build workflow prompts:
 ```text
 build it
 fix it
+spec it
 Use the getting-started skill to help me get started on Alis Build.
 ```
 
-`build it` discovers the right Alis Build skill for the thing you want to build. `fix it` is an alias for the same discovery flow when the goal is framed as a fix.
+`build it` discovers the right Alis Build skill for the thing you want to build. `fix it` is an alias for the same discovery flow when the goal is framed as a fix. `spec it` turns the current session into an Alis Build build specification via `SpecIt`.
 
 ## Troubleshooting
 

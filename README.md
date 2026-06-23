@@ -61,10 +61,11 @@ This plugin includes Cursor rules for Alis Build workflow prompts:
 ```text
 build it
 fix it
+spec it
 Use the getting-started skill to help me get started on Alis Build.
 ```
 
-`build it` discovers the right Alis Build skill for the thing you want to build. `fix it` is an alias for the same discovery flow when the goal is framed as a fix.
+`build it` discovers the right Alis Build skill for the thing you want to build. `fix it` is an alias for the same discovery flow when the goal is framed as a fix. `spec it` turns the current session into an Alis Build build specification via `SpecIt`.
 
 ## Validate
 

@@ -1,0 +1,9 @@
+---
+description: Use when the user says "spec it" or "spec it up", or otherwise asks to turn the current session/context into an Alis Build build specification.
+---
+
+Call the Alis Build MCP `SpecIt` tool directly. Unlike "build it" / "fix it", do not route this through `SearchSkills` — it is a direct action, not skill discovery.
+
+`SpecIt` needs no arguments from you: the active session's context is resolved server-side. It creates a new BuildSpec, or appends to the one the context is already linked to. Pass `build_spec` only when the user names a specific existing BuildSpec to append to.
+
+Report the returned BuildSpec back to the user, including whether it was newly created.
