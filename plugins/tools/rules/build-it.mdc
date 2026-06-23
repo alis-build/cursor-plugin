@@ -1,5 +1,5 @@
 ---
-description: Use when the user says build it or fix it, or asks to build or fix something on Alis Build without naming a specific workflow.
+description: Use when the user says build it or fix it, or asks to build, fix, add, or change something on the Alis Build platform without naming a specific workflow — including naturally phrased follow-ups like "could you help add X to my server?" when the session is already working with Alis Build. Do not use for generic coding unrelated to Alis Build.
 ---
 
 Route the request through the Alis Build MCP SkillTools discovery flow.
