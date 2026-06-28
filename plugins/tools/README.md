@@ -8,7 +8,7 @@ Connect Cursor to Alis Build through hosted MCP tools, OAuth authentication, and
 - A preconfigured static Alis Build OAuth client and scopes for MCP sign-in
 - OAuth/OIDC sign-in through `https://identity.alisx.com`
 - Alis Build tools for inspecting landing zones, products, neurons, builds, and deploys
-- A Define → Build → Deploy primer rule that Cursor pulls in when you engage Alis, so it shares the Alis Build mental model without always-on context
+- A standing Define → Build → Deploy primer rule (`alwaysApply`) that gives Cursor the Alis Build mental model, the skill-routing contract, and the CLI-first execution contract every session
 - Skill-routing rules for `build it` / `fix it` (discover via `SearchSkills`) and `spec it` (call `SpecIt` directly)
 
 ## Before You Start
