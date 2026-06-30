@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": "./inject-service-context.sh",
+        "type": "command"
+      }
+    ]
+  }
+}

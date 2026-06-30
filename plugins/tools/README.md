@@ -10,6 +10,7 @@ Connect Cursor to Alis Build through hosted MCP tools, OAuth authentication, and
 - Alis Build tools for inspecting landing zones, products, neurons, builds, and deploys
 - A standing Define → Build → Deploy primer rule (`alwaysApply`) that gives Cursor the Alis Build mental model, the skill-routing contract, and the CLI-first execution contract every session
 - Skill-routing rules for `build it` / `fix it` (discover via `SearchSkills`) and `spec it` (call `SpecIt` directly)
+- A `sessionStart` hook that, when a session opens inside an Alis Build service folder (`~/alis.build/<org>/build|define/…`), injects the package id and a pointer to the matching definitions ⇄ implementation counterpart
 
 ## Before You Start
 
