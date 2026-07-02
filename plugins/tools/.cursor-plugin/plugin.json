@@ -1,7 +1,7 @@
 {
   "name": "tools",
   "displayName": "Alis Build",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Connect Cursor to Alis Build through MCP tools and workspace context.",
   "author": {
     "name": "Alis Build"
