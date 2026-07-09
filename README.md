@@ -8,7 +8,7 @@
   <strong>Connect Cursor to Alis Build.</strong>
 </p>
 
-Use this plugin to let Cursor inspect Alis Build landing zones, products, neurons, builds, deploys, and related workspace context.
+Use this plugin to let Cursor inspect Alis Build organisations, products, neurons, builds, deploys, and related workspace context.
 
 ## What You Get
 
@@ -22,7 +22,7 @@ Use this plugin to let Cursor inspect Alis Build landing zones, products, neuron
 You need:
 
 - Cursor with plugin support
-- An Alis Build account with access to the landing zones and products you want to use
+- An Alis Build account with access to the organisations and products you want to use
 - Network access to `https://mcp.alis.build` and `https://identity.alisx.com`
 - The Alis Build OAuth client must allow Cursor's MCP redirect URI: `cursor://anysphere.cursor-mcp/oauth/callback`
 
@@ -43,7 +43,7 @@ fix it
 ```
 
 ```text
-Use Alis Build to list the landing zones I can access.
+Use Alis Build to list the organisations I can access.
 ```
 
 ```text

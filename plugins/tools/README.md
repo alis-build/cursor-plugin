@@ -7,7 +7,7 @@ Connect Cursor to Alis Build through hosted MCP tools, OAuth authentication, and
 - A preconfigured Cursor MCP server for `https://mcp.alis.build`
 - A preconfigured static Alis Build OAuth client and scopes for MCP sign-in
 - OAuth/OIDC sign-in through `https://identity.alisx.com`
-- Alis Build tools for inspecting landing zones, products, neurons, builds, and deploys
+- Alis Build tools for inspecting organisations, products, neurons, builds, and deploys
 - A standing Define → Build → Deploy primer rule (`alwaysApply`) that gives Cursor the Alis Build mental model, the skill-routing contract, and the CLI-first execution contract every session
 - Skill-routing rules for `build it` / `fix it` (discover via `SearchSkills`) and `spec it` (call `SpecIt` directly)
 - A `sessionStart` hook that, when a session opens inside an Alis Build service folder (`~/alis.build/<org>/build|define/…`), injects the package id and a pointer to the matching definitions ⇄ implementation counterpart
@@ -17,7 +17,7 @@ Connect Cursor to Alis Build through hosted MCP tools, OAuth authentication, and
 You need:
 
 - Cursor with plugin support
-- An Alis Build account with access to the landing zones and products you want to use
+- An Alis Build account with access to the organisations and products you want to use
 - Network access to `https://mcp.alis.build` and `https://identity.alisx.com`
 - The Alis Build OAuth client must allow Cursor's MCP redirect URI: `cursor://anysphere.cursor-mcp/oauth/callback`
 
@@ -34,7 +34,7 @@ fix it
 ```
 
 ```text
-Use Alis Build to list the landing zones I can access.
+Use Alis Build to list the organisations I can access.
 ```
 
 ```text
