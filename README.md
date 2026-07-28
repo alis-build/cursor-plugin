@@ -16,6 +16,8 @@ Use this plugin to let Cursor inspect Alis Build organisations, products, neuron
 - A preconfigured static Alis Build OAuth client and scopes for MCP sign-in
 - OAuth/OIDC sign-in through `https://identity.alisx.com`
 - Alis Build tools available inside Cursor after sign-in
+- A standing Define → Build → Deploy primer rule with CLI-first skill routing (`alis skills search|load`)
+- Auto-approval of clean `alis …` CLI commands via a `beforeShellExecution` hook, with `--confirm-production` / `--approve` / `blocks uninstall --yes` always prompting (double-keyed)
 
 ## Before You Start
 
@@ -65,7 +67,7 @@ spec it
 Use the getting-started skill to help me get started on Alis Build.
 ```
 
-`build it` discovers the right Alis Build skill for the thing you want to build. `fix it` is an alias for the same discovery flow when the goal is framed as a fix. `spec it` turns the current session into an Alis Build build specification via `SpecIt`.
+`build it` discovers the right Alis Build skill for the thing you want to build (via `alis skills search` when a terminal is available). `fix it` is an alias for the same discovery flow when the goal is framed as a fix. `spec it` turns the current session into an Alis Build build specification via `SpecIt`.
 
 ## Validate
 

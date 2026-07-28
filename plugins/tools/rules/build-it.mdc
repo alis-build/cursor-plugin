@@ -2,12 +2,12 @@
 description: Use when the user says build it or fix it, or asks to build or fix something on Alis Build without naming a specific workflow.
 ---
 
-Route the request through the Alis Build MCP SkillTools discovery flow.
+Run the Alis Build "build it" / "fix it" router as described in the DBD rule's routing contract.
 
 First infer what the user wants built or fixed from the current request, visible errors, repository context, and any available Alis Build context. If the goal is still ambiguous, ask exactly one concise clarification question: "What exactly should Alis build?"
 
-Once the goal is clear, call SearchSkills with the clarified goal as the query. SearchSkills must be the first SkillTools discovery call. Present the returned queried_skills in a concise table with columns for number, skill id, description, and when to choose it. Ask the user which skill to use before loading or executing any specialized workflow.
+Once the goal is clear, run `alis skills search "<clarified goal>" --json` (use the MCP `SearchSkills` tool only if no terminal is available). Present the matching skills in a concise table with columns for number, skill id, description, and when to choose it. Ask the user which skill to use, then load it with `alis skills load <id>` and follow it — the loaded skill owns execution.
 
-If SearchSkills returns no results, call ListSkills as the backup and present the available skills. If no listed skill fits the goal, ask whether the user wants to request a new skill. If they agree, call RequestSkill with display_name, description, use_case, and notes. The current RequestSkill implementation emails the Alis Build team for review.
+If the search returns nothing, say so and offer `alis skills request` (it proposes a new skill to the Alis Build team for review) — do not fall back to listing the whole catalogue.
 
-Do not trigger builds, defines, deploys, commits, or code edits from this router step. After the user chooses a skill, load that skill and follow its instructions.
+Do not trigger builds, defines, deploys, commits, or code edits from this router step — only the loaded skill does that, and only when its workflow requires it.

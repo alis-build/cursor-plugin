@@ -4,6 +4,11 @@
 # counterpart half — definitions (protobuf API contract) when on the build side,
 # implementation when on the define side — plus the package id.
 #
+# It also injects a session-id instruction line: Cursor has no hook channel that
+# rewrites MCP tool inputs, so the agent itself must pass the session id to the
+# session-aware Alis Build MCP tools (LoadSkill, SpecIt, RunDefine, RunBuild,
+# RunDeploy). The id comes from the hook payload's conversation_id.
+#
 # Layout (verified): build  = <root>/alis.build/<org>/build/<path...>
 #                     define = <root>/alis.build/<org>/define/<org>/<path...>
 # Package id          = <org>.<path-with-/-as-.>   (e.g. alis.os.cli.v1)
@@ -12,30 +17,47 @@
 # object on stdout; the `additional_context` field is injected into the model's
 # context. The working directory is read from CURSOR_PROJECT_DIR (Cursor also
 # exposes a CLAUDE_PROJECT_DIR alias), falling back to $PWD. Any non-match — or a
-# missing jq — emits an empty object `{}` (a no-op) and exits 0 so the session
-# proceeds unmodified.
+# missing jq — degrades gracefully: an empty object `{}` (a no-op) and exit 0 so
+# the session proceeds unmodified.
 set -euo pipefail
 
-emit_empty() { printf '{}\n'; exit 0; }
-command -v jq >/dev/null 2>&1 || emit_empty
+command -v jq >/dev/null 2>&1 || { printf '{}\n'; exit 0; }
+
+payload="$(cat 2>/dev/null || true)"
+sid="$(printf '%s' "$payload" | jq -r '.conversation_id // .session_id // empty' 2>/dev/null || true)"
+
+ctx=""
+add() { ctx="${ctx}${1}"$'\n'; }
+
+emit() {
+  if [ -n "$sid" ]; then
+    add "When calling the Alis Build MCP tools LoadSkill, SpecIt, RunDefine, RunBuild, or RunDeploy, always include the argument session_id: \"$sid\" so the server can resolve this session's context."
+  fi
+  if [ -n "$ctx" ]; then
+    jq -n --arg c "$ctx" '{additional_context: $c}'
+  else
+    printf '{}\n'
+  fi
+  exit 0
+}
 
 dir="${CURSOR_PROJECT_DIR:-${CLAUDE_PROJECT_DIR:-$PWD}}"
-case "$dir" in */alis.build/*) ;; *) emit_empty ;; esac
+case "$dir" in */alis.build/*) ;; *) emit ;; esac
 
 root="${dir%%/alis.build/*}/alis.build"
 rest="${dir#*/alis.build/}"
 
 IFS='/' read -ra parts <<< "$rest"
 org="${parts[0]:-}"; side="${parts[1]:-}"
-[ -n "$org" ] && [ -n "$side" ] || emit_empty
+[ -n "$org" ] && [ -n "$side" ] || emit
 
 # Path segments below the side (and below the nested <org> on the define side).
 segs=()
 case "$side" in
   build)  segs=("${parts[@]:2}") ;;
-  define) [ "${parts[2]:-}" = "$org" ] || emit_empty   # skip vendored google/lf symlinks
+  define) [ "${parts[2]:-}" = "$org" ] || emit   # skip vendored google/lf symlinks
           segs=("${parts[@]:3}") ;;
-  *)      emit_empty ;;
+  *)      emit ;;
 esac
 
 # Resolve up to the service version (vN) root; drop empty segments.
@@ -47,16 +69,13 @@ for s in ${segs[@]+"${segs[@]}"}; do
   svc+=("$s")
   if [[ "$s" =~ ^v[0-9]+$ ]]; then found_version=1; break; fi
 done
-[ "${#svc[@]}" -gt 0 ] || emit_empty   # at org/side root → nothing specific to say
+[ "${#svc[@]}" -gt 0 ] || emit   # at org/side root → nothing specific to say
 
 join() { local IFS="$1"; shift; printf '%s' "$*"; }
 relpath="$(join / "${svc[@]}")"
 definedir="$root/$org/define/$org/$relpath"
 builddir="$root/$org/build/$relpath"
 pkg=""; [ "$found_version" -eq 1 ] && pkg="$org.$(join . "${svc[@]}")"
-
-ctx=""
-add() { ctx="${ctx}${1}"$'\n'; }
 
 add_protos() {  # append top-level *.proto basenames in $1, if any
   local d="$1" f names=() out
@@ -89,5 +108,4 @@ else  # define side
   fi
 fi
 
-jq -n --arg c "$ctx" '{additional_context: $c}'
-exit 0
+emit

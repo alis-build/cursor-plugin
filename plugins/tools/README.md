@@ -9,8 +9,17 @@ Connect Cursor to Alis Build through hosted MCP tools, OAuth authentication, and
 - OAuth/OIDC sign-in through `https://identity.alisx.com`
 - Alis Build tools for inspecting organisations, products, neurons, builds, and deploys
 - A standing Define → Build → Deploy primer rule (`alwaysApply`) that gives Cursor the Alis Build mental model, the skill-routing contract, and the CLI-first execution contract every session
-- Skill-routing rules for `build it` / `fix it` (discover via `SearchSkills`) and `spec it` (call `SpecIt` directly)
-- A `sessionStart` hook that, when a session opens inside an Alis Build service folder (`~/alis.build/<org>/build|define/…`), injects the package id and a pointer to the matching definitions ⇄ implementation counterpart
+- Skill-routing rules for `build it` / `fix it` (discover via `alis skills search` / `alis skills load`; MCP `SearchSkills` only without a terminal) and `spec it` (call `SpecIt` directly)
+- A `sessionStart` hook that, when a session opens inside an Alis Build service folder (`~/alis.build/<org>/build|define/…`), injects the package id and a pointer to the matching definitions ⇄ implementation counterpart, plus an instruction to pass the session id to the session-aware Alis Build MCP tools
+- A `beforeShellExecution` hook that auto-approves clean, single `alis …` commands so the agent can run the Alis Build CLI without a prompt on every call — chained/redirected commands defer to Cursor's normal permission flow, and `--confirm-production`, `--approve`, and `blocks uninstall --yes` always prompt (deliberate double-keying). Restrict with a space-separated `ALIS_ALLOWED_SUBCMDS` allowlist if desired. The hook also records the pending command at `~/.alis/agent-approval.json` for the CLI's approval gate (audit only on Cursor — Cursor exposes no permission-mode signal, so the CLI never treats it as a standing grant)
+
+## Primer sync
+
+The DBD primer rule body (`rules/dbd-primer.mdc`) is synced from the canonical primer in the
+Alis Build Claude Code plugin (`claude-plugin/plugins/alis-build/context/dbd-primer.md`).
+Local differences are limited to the rule frontmatter, "primer"→"rule" and "shell"→"terminal"
+wording, and the closing sentence of the Google documentation section (Cursor has no
+`/connect-google` command). Sync the body on each claude-plugin primer release.
 
 ## Before You Start
 
@@ -56,7 +65,7 @@ spec it
 Use the getting-started skill to help me get started on Alis Build.
 ```
 
-`build it` discovers the right Alis Build skill for the thing you want to build. `fix it` is an alias for the same discovery flow when the goal is framed as a fix. `spec it` turns the current session into an Alis Build build specification via `SpecIt`.
+`build it` discovers the right Alis Build skill for the thing you want to build (via `alis skills search` when a terminal is available). `fix it` is an alias for the same discovery flow when the goal is framed as a fix. `spec it` turns the current session into an Alis Build build specification via `SpecIt`.
 
 ## Troubleshooting
 

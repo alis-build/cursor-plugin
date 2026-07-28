@@ -6,6 +6,12 @@
         "command": "./inject-service-context.sh",
         "type": "command"
       }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": "./allow-alis-cli.sh",
+        "type": "command"
+      }
     ]
   }
 }
