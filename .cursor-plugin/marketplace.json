@@ -5,13 +5,13 @@
   },
   "metadata": {
     "description": "Alis Build plugins for Cursor",
-    "version": "0.11.0"
+    "version": "0.12.0"
   },
   "plugins": [
     {
       "name": "tools",
       "source": "./plugins/tools",
-      "description": "Connect Cursor to Alis Build through MCP tools and workspace context."
+      "description": "Connect Cursor to Alis Build through the alis CLI and workspace context."
     }
   ]
 }

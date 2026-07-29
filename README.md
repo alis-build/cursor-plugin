@@ -8,14 +8,10 @@
   <strong>Connect Cursor to Alis Build.</strong>
 </p>
 
-Use this plugin to let Cursor inspect Alis Build organisations, products, neurons, builds, deploys, and related workspace context.
+Use this plugin to let Cursor work with Alis Build organisations, products, neurons, builds, and deploys through the `alis` CLI, with workspace-aware context injected into every session.
 
 ## What You Get
 
-- A preconfigured Cursor MCP server for `https://mcp.alis.build`
-- A preconfigured static Alis Build OAuth client and scopes for MCP sign-in
-- OAuth/OIDC sign-in through `https://identity.alisx.com`
-- Alis Build tools available inside Cursor after sign-in
 - A standing Define → Build → Deploy primer rule with CLI-first skill routing (`alis skills search|load`)
 - Auto-approval of clean `alis …` CLI commands via a `beforeShellExecution` hook, with `--confirm-production` / `--approve` / `blocks uninstall --yes` always prompting (double-keyed)
 
@@ -24,9 +20,8 @@ Use this plugin to let Cursor inspect Alis Build organisations, products, neuron
 You need:
 
 - Cursor with plugin support
+- The `alis` CLI installed, on your `PATH`, and signed in (`alis login`)
 - An Alis Build account with access to the organisations and products you want to use
-- Network access to `https://mcp.alis.build` and `https://identity.alisx.com`
-- The Alis Build OAuth client must allow Cursor's MCP redirect URI: `cursor://anysphere.cursor-mcp/oauth/callback`
 
 ## Install
 
@@ -34,7 +29,7 @@ Install this repository as a Cursor plugin marketplace, then install the `tools`
 
 ## Use It
 
-After sign-in, ask Cursor to use Alis Build:
+After installing, ask Cursor to use Alis Build:
 
 ```text
 build it
@@ -63,11 +58,10 @@ This plugin includes Cursor rules for Alis Build workflow prompts:
 ```text
 build it
 fix it
-spec it
 Use the getting-started skill to help me get started on Alis Build.
 ```
 
-`build it` discovers the right Alis Build skill for the thing you want to build (via `alis skills search` when a terminal is available). `fix it` is an alias for the same discovery flow when the goal is framed as a fix. `spec it` turns the current session into an Alis Build build specification via `SpecIt`.
+`build it` discovers the right Alis Build skill for the thing you want to build (via `alis skills search`). `fix it` is an alias for the same discovery flow when the goal is framed as a fix.
 
 ## Validate
 
@@ -77,10 +71,6 @@ node scripts/validate-template.mjs
 
 ## Troubleshooting
 
-If `alis-build` does not appear as an MCP server, confirm the plugin install completed and that `plugins/tools/mcp.json` is present in this plugin.
+If the rules or hooks do not take effect, confirm the plugin install completed and reload Cursor.
 
-If sign-in fails with `Incompatible auth server: does not support dynamic client registration`, confirm the installed plugin's MCP config contains `auth.CLIENT_ID`. Cursor uses that static OAuth client for Alis Build because the auth server does not support Dynamic Client Registration.
-
-If sign-in fails with `invalid redirect`, confirm the Alis Build OAuth client allows the exact redirect URI `cursor://anysphere.cursor-mcp/oauth/callback`.
-
-If sign-in still fails, confirm that you can reach both `https://mcp.alis.build` and `https://identity.alisx.com`, then retry the MCP login flow in Cursor.
+If `alis` commands fail with an auth error, run `alis login` (or `alis authorise <org>.<product>` for git/package credentials) and retry.

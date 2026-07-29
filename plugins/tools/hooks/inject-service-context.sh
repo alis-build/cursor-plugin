@@ -4,11 +4,6 @@
 # counterpart half — definitions (protobuf API contract) when on the build side,
 # implementation when on the define side — plus the package id.
 #
-# It also injects a session-id instruction line: Cursor has no hook channel that
-# rewrites MCP tool inputs, so the agent itself must pass the session id to the
-# session-aware Alis Build MCP tools (LoadSkill, SpecIt, RunDefine, RunBuild,
-# RunDeploy). The id comes from the hook payload's conversation_id.
-#
 # Layout (verified): build  = <root>/alis.build/<org>/build/<path...>
 #                     define = <root>/alis.build/<org>/define/<org>/<path...>
 # Package id          = <org>.<path-with-/-as-.>   (e.g. alis.os.cli.v1)
@@ -23,16 +18,12 @@ set -euo pipefail
 
 command -v jq >/dev/null 2>&1 || { printf '{}\n'; exit 0; }
 
-payload="$(cat 2>/dev/null || true)"
-sid="$(printf '%s' "$payload" | jq -r '.conversation_id // .session_id // empty' 2>/dev/null || true)"
+cat >/dev/null 2>&1 || true   # drain the hook payload on stdin
 
 ctx=""
 add() { ctx="${ctx}${1}"$'\n'; }
 
 emit() {
-  if [ -n "$sid" ]; then
-    add "When calling the Alis Build MCP tools LoadSkill, SpecIt, RunDefine, RunBuild, or RunDeploy, always include the argument session_id: \"$sid\" so the server can resolve this session's context."
-  fi
   if [ -n "$ctx" ]; then
     jq -n --arg c "$ctx" '{additional_context: $c}'
   else

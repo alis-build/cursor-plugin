@@ -1,8 +1,8 @@
 {
   "name": "tools",
   "displayName": "Alis Build",
-  "version": "0.11.0",
-  "description": "Connect Cursor to Alis Build through MCP tools and workspace context.",
+  "version": "0.12.0",
+  "description": "Connect Cursor to Alis Build through the alis CLI and workspace context.",
   "author": {
     "name": "Alis Build"
   },
@@ -12,12 +12,11 @@
   "keywords": [
     "alis-build",
     "cursor",
-    "mcp",
+    "cli",
     "builds",
     "deploys",
     "workspaces"
   ],
   "logo": "assets/alis.svg",
-  "mcpServers": "mcp.json",
   "hooks": "hooks/hooks.json"
 }
