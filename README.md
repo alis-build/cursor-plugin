@@ -12,7 +12,7 @@ Use this plugin to let Cursor work with Alis Build organisations, products, neur
 
 ## What You Get
 
-- A standing Define → Build → Deploy primer rule with CLI-first skill routing (`alis skills search|load`)
+- A standing Define → Build → Deploy primer rule with native skill discovery — description-triggered `discover` and `capture` rules fire on your own words (`alis skills search|load|capture`)
 - Auto-approval of clean `alis …` CLI commands via a `beforeShellExecution` hook, with `--confirm-production` / `--approve` / `blocks uninstall --yes` always prompting (double-keyed)
 
 ## Before You Start
@@ -29,14 +29,10 @@ Install this repository as a Cursor plugin marketplace, then install the `tools`
 
 ## Use It
 
-After installing, ask Cursor to use Alis Build:
+After installing, ask Cursor to use Alis Build — just describe what you want:
 
 ```text
-build it
-```
-
-```text
-fix it
+Add a search endpoint to my orders service.
 ```
 
 ```text
@@ -51,17 +47,13 @@ Use Alis Build to inspect the current workspace, product, active neurons, and re
 Use Alis Build to review the latest failed build or deploy logs and suggest the next action.
 ```
 
-## Workflow Prompts
+## Workflow Rules
 
-This plugin includes Cursor rules for Alis Build workflow prompts:
+This plugin includes description-triggered Cursor rules for Alis Build workflows:
 
-```text
-build it
-fix it
-Use the getting-started skill to help me get started on Alis Build.
-```
-
-`build it` discovers the right Alis Build skill for the thing you want to build (via `alis skills search`). `fix it` is an alias for the same discovery flow when the goal is framed as a fix.
+- **`discover`** — finds and loads the right Alis Build skill for what you want to do (via `alis skills search` / `alis skills load`). Cursor applies it when your request touches the platform — describe the goal in your own words; no wake word is needed.
+- **`capture`** — turns work just completed in the session into a reusable skill for your team. Say "capture this as a skill" (or "make this a skill" / "skillify this").
+- **`getting-started`** — say "Use the getting-started skill to help me get started on Alis Build."
 
 ## Validate
 
