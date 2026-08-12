@@ -13,6 +13,7 @@ Use this plugin to let Cursor work with Alis Build organisations, products, neur
 ## What You Get
 
 - A standing Define → Build → Deploy primer rule with native skill discovery — description-triggered `discover` and `capture` rules fire on your own words (`alis skills search|load|capture`)
+- Catalog metadata refreshed quietly at session start; the plugin never installs or prunes native user skills
 - Auto-approval of clean `alis …` CLI commands via a `beforeShellExecution` hook, with `--confirm-production` / `--approve` / `blocks uninstall --yes` always prompting (double-keyed)
 
 ## Before You Start

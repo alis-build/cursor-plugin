@@ -5,6 +5,10 @@
       {
         "command": "./inject-service-context.sh",
         "type": "command"
+      },
+      {
+        "command": "./sync-skills.sh",
+        "type": "command"
       }
     ],
     "beforeShellExecution": [

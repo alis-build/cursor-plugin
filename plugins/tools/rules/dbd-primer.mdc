@@ -71,7 +71,9 @@ This rule is the standing how-to guide for Alis Build work. It carries three thi
 Skill discovery now runs through Cursor's own rules. The `discover` rule fires on the user's
 own words when the request matches its description — Cursor applies it whenever the task
 touches the platform; no wake word is needed. Follow that rule's flow for Alis-platform-shaped
-work. Once a skill is loaded, it owns execution.
+work. The session-start hook refreshes catalog metadata only; it never installs or prunes
+native per-skill entries. A user may explicitly opt into those with
+`alis skills sync --native`. Once a skill is loaded, it owns execution.
 
 Direct DBD commands ("define it", "build it", "deploy it" on an already-known target) are
 deterministic — run the `alis` CLI directly (see **Executing DBD**); no skill is needed.
