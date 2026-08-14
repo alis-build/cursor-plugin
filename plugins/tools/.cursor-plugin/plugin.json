@@ -1,7 +1,7 @@
 {
   "name": "tools",
   "displayName": "Alis Build",
-  "version": "0.14.1",
+  "version": "0.15.0",
   "description": "Connect Cursor to Alis Build through the alis CLI and workspace context.",
   "author": {
     "name": "Alis Build"
