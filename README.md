@@ -12,7 +12,7 @@ Use this plugin to let Cursor work with Alis Build organisations, products, neur
 
 ## What You Get
 
-- A standing Define → Build → Deploy primer rule with native skill discovery — description-triggered `discover` and `capture` rules fire on your own words (`alis skills search|load|capture`)
+- A standing Define → Build → Deploy primer rule with quiet, local-first skill discovery — description-triggered `discover` and `capture` rules fire on your own words (`alis skills suggest|load|capture`), never on generic coding just because you are inside a workspace
 - Catalog metadata refreshed quietly at session start; the plugin never installs or prunes native user skills
 - Auto-approval of clean `alis …` CLI commands via a `beforeShellExecution` hook, with `--confirm-production` / `--approve` / `blocks uninstall --yes` always prompting (double-keyed)
 
@@ -52,7 +52,7 @@ Use Alis Build to review the latest failed build or deploy logs and suggest the 
 
 This plugin includes description-triggered Cursor rules for Alis Build workflows:
 
-- **`discover`** — finds and loads the right Alis Build skill for what you want to do (via `alis skills search` / `alis skills load`). Cursor applies it when your request touches the platform — describe the goal in your own words; no wake word is needed.
+- **`discover`** — finds and loads the right Alis Build skill for what you want to do — local-first: it probes the local catalog (`alis skills suggest --json`, ~40ms, no network), loads a registry skill only on a distinctive match, and stays quiet otherwise (`alis skills search` is reserved for explicit "find me a skill" asks). Cursor applies it when your request touches the platform — describe the goal in your own words; no wake word is needed. It does not fire on generic coding (Makefiles, ordinary bugs, tests, git) just because you are inside a workspace.
 - **`capture`** — turns work just completed in the session into a reusable skill for your team. Say "capture this as a skill" (or "make this a skill" / "skillify this").
 - **`getting-started`** — say "Use the getting-started skill to help me get started on Alis Build."
 
