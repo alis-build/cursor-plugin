@@ -13,15 +13,22 @@ Connect Cursor to Alis Build through the `alis` CLI and workspace-aware build an
 ## Primer sync
 
 The DBD primer rule body (`rules/dbd-primer.mdc`) is synced from the canonical primer in the
-Alis Build Claude Code plugin v0.19.0
-(`claude-plugin/plugins/alis-build/context/dbd-primer.md`) — whose "Skills — discovery is
-native and quiet" section describes local-first, confidence-gated discovery and whose
-Executing DBD section carries the "Diagnose before re-running" block and the `.playground`
-hidden+gitignored gotcha. Local differences are limited to the rule frontmatter, the Skills
-section naming the `discover` / `capture` rules (Claude names `alis-build:discover` /
-`alis-build:capture` skills), and the Google documentation section omitting
-`/connect-google` (Cursor has no such command). Sync the body on each claude-plugin primer
-release.
+Alis Build Claude Code plugin v0.21.0
+(`claude-plugin/plugins/alis-build/context/dbd-primer.md`) — the condensed rewrite whose
+Executing DBD section carries the `--json` stdout/stderr contract, the
+`alis operations wait` no-sleep rule, and the no-hand-edited-pins rule alongside
+"Diagnose before re-running" and the `.playground` hidden+gitignored gotcha. Local
+differences are limited to the rule frontmatter and the Skills section naming the
+`discover` / `capture` rules (Claude names `alis-build:discover` / `alis-build:capture`
+skills). Sync the body on each claude-plugin primer release.
+
+One Claude-plugin behavior is deliberately not ported: Claude ships the primer through a
+workspace-gated `SessionStart` hook (full primer inside `~/alis.build/…`, a short digest
+elsewhere, nothing without the CLI). Cursor delivers the primer as an `alwaysApply` rule,
+and rule frontmatter (`description`, `globs`, `alwaysApply`) cannot test where the
+workspace lives on disk — `globs` matches files referenced in context, not the workspace
+path — and `hooks.json` events cannot enable or disable a rule. The primer therefore stays
+ungated on Cursor and applies in every session.
 
 ## Before You Start
 
