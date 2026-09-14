@@ -19,7 +19,7 @@ Executing DBD section carries the `--json` stdout/stderr contract, the
 `alis operations wait` no-sleep rule, and the no-hand-edited-pins rule alongside
 "Diagnose before re-running" and the `.playground` hidden+gitignored gotcha. Local
 differences are limited to the rule frontmatter and the Skills section naming the
-`discover` / `capture` rules (Claude names `alis-build:discover` / `alis-build:capture`
+`discover` / `capture` rules (Claude names `alis:discover` / `alis:capture`
 skills). Sync the body on each claude-plugin primer release.
 
 One Claude-plugin behavior is deliberately not ported: Claude ships the primer through a

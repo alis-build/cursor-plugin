@@ -78,7 +78,7 @@ Native hook payloads and permission mechanisms remain specific to this agent.
 The `handoff` rule handles "resume on my workstation", lists enrolled destinations, and explains
 how to inspect or cancel a known Claude handoff. **Automatic transfer currently supports
 Claude Code only; this plugin does not transfer Cursor sessions.** Start a Claude transfer
-with `/alis-build:handoff` inside the source Claude session. For Cursor work, the guide can
+with `/alis:handoff` inside the source Claude session. For Cursor work, the guide can
 prepare a continuation summary; files and live processes are not transferred by that summary.
 Keep the laptop awake until the CLI reports `safe_to_close: true`.
 
