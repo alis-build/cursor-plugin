@@ -68,19 +68,21 @@ If the rules or hooks do not take effect, confirm the plugin install completed a
 
 If `alis` commands fail with an auth error, run `alis login` (or `alis authorise <org>.<product>` for git/package credentials) and retry.
 
-## Workstation handoff and Claude parity
+## Workstation handoff in herdr
 
-Shared CLI guidance is synced with [Claude plugin v0.23.0](https://github.com/alis-build/claude-plugin/commit/2cb12b52d2d74c642f58ccd5bee58cd12b9dacfe):
-standalone commands, environment discovery without variable values, asynchronous
-operations, complete JSON results, logs/cancellation and pinned production approval.
-Native hook payloads and permission mechanisms remain specific to this agent.
+The `handoff` rule opens and monitors existing Alis handoffs with `open <id>` and
+`status <id> --watch`. Herdr groups a product in a space such as `alis.os`, a
+service in a tab such as `cli.v1`, and each continuation in its own pane. Native
+Claude/OpenCode sessions resume with “Continue where you left off.” Codex and
+Antigravity CLI sessions require an explicit summary choice.
 
-The `handoff` rule handles "resume on my workstation", lists enrolled destinations, and explains
-how to inspect or cancel a known Claude handoff. **Automatic transfer currently supports
-Claude Code only; this plugin does not transfer Cursor sessions.** Start a Claude transfer
-with `/alis:handoff` inside the source Claude session. For Cursor work, the guide can
-prepare a continuation summary; files and live processes are not transferred by that summary.
-Keep the laptop awake until the CLI reports `safe_to_close: true`.
+**Automatic Cursor transfer is not supported in this release**, including the
+coordinator's summary mode. For Cursor work, the rule can prepare a short manual
+continuation note with the next step and exact active Alis operation IDs. That
+note does not transfer files, migrate processes, or start a remote session.
+The capability manifest therefore advertises no Cursor transfer modes.
 
-Handoff requires the matching CLI and workstation runtime release, plus the Alis Claude
-plugin on both ends. Installing this plugin alone does not enable the transfer backend.
+Start supported transfers inside the corresponding source agent with its matching
+Alis plugin. Keep the laptop awake until `safe_to_close: true`; upload or pane
+creation alone is insufficient. The remote continuation survives closing its
+browser terminal. Matching CLI and workstation runtime releases are required.

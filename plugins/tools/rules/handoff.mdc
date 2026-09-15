@@ -1,44 +1,51 @@
 ---
-description: Guide workstation continuation requests, inspect existing Claude handoffs, and explain the native-session support boundary. Use for "resume on my workstation" or "hand this session over".
+description: Open or monitor an Alis workstation handoff in herdr, or prepare a short manual continuation note for Cursor. Use for "resume on my workstation", "hand this session over", or closing the laptop while work continues.
 alwaysApply: false
 ---
 
-# Workstation handoff
+# Workstation handoff in herdr
 
-The Alis handoff coordinator currently transfers **native Claude Code sessions only**.
-This plugin does not register a native session-transfer adapter for Cursor. Never pass
-this agent's session/thread/conversation id as a Claude session id, copy private agent
-state into `.claude`, call hidden `_hook`/`_agent` endpoints, or terminate this agent.
+The Alis coordinator supports native Claude and OpenCode continuation. Codex and
+Antigravity CLI sessions require an explicit summary choice. Cursor has no
+registered transfer adapter in this release, including automatic summary transfer.
+Never run `--agent cursor`, pass a Cursor conversation ID to another adapter,
+copy private agent homes, call hidden lifecycle endpoints, or terminate Cursor.
 
-When asked to resume this Cursor conversation on a workstation, explain that automatic
-transfer is not supported by this integration. Offer a continuation summary for a new
-Cursor session on the workstation: task, repository and branch, uncommitted work,
-constraints, completed external actions that must not be repeated, and next action.
-A summary alone does not transfer files or start work remotely; never report otherwise.
-Do not switch agents or start a Claude transfer without the user's request.
+For this Cursor conversation, explain that automatic transfer is unavailable.
+If the user chooses a manual continuation, prepare a short note: task, relevant
+constraints, repository/branch and uncommitted work, completed external actions,
+exact active Alis operation IDs, and next action. Avoid a long recap. The note
+does not transfer files, move live processes, or start a remote agent. Do not
+switch agents without the user's choice or claim the laptop is safe to close.
 
-For an existing Claude handoff, check `alis workstation handoff --help` first. If the
-command is absent, report that the handoff CLI release must be installed. Then use:
+For an existing handoff, check `alis workstation handoff --help`, then use its
+exact ID. The CLI must include `open` and `status --watch` for this flow:
 
-- `alis workstation handoff targets --json` to list enrolled SSH destinations.
-- `alis workstation handoff status <handoff-id> --json` for an exact known handoff id.
-- `alis workstation handoff cancel <handoff-id> --json` only when cancellation is requested.
+- `alis workstation handoff targets --json` lists enrolled SSH destinations.
+- `alis workstation handoff status <id> --watch --json` waits for remote acceptance.
+- `alis workstation handoff open <id>` opens the continuation in herdr.
+- `alis workstation handoff cancel <id> --json` cancels only when requested.
 
-If the user wants to move a Claude conversation, direct them to run
-`/alis:handoff` **inside that source Claude session** with the handoff-enabled
-Alis Claude plugin. It obtains the correct native session id and ends its turn so the
-coordinator can reach a safe stop. Do not choose the most recent transcript or guess an id.
-With several eligible destinations, ask which one; with none, report that enrollment
-is needed. Keep each CLI invocation standalone and preserve its entire JSON response.
+Keep each invocation standalone and read its complete JSON result. For a new
+transfer, run the matching handoff skill inside the supported source agent with
+the current session ID obtained from its lifecycle context. Never guess a session
+ID or select the newest transcript. Select the only eligible destination, or ask
+which destination when several qualify. The source must end its turn after
+queueing; watch progress in a separate terminal so it can reach a safe boundary.
 
-The laptop must remain awake and connected until status reports `safe_to_close: true`.
-A queued transfer, unreachable destination, or summary is not an acknowledgement.
-The destination may require native workspace trust or permission; do not bypass it.
-Unknown remote status is not permission to restart locally. Cancellation stops remote
-continuation and releases the local claim only after acknowledgement.
+Herdr groups the product as a space (`alis.os`), service as a tab (`cli.v1`), and
+each continuation as a pane. Native continuation uses “Continue where you left
+off.” Paired build/Define checkpoints arrive in isolated worktrees. Closing the
+browser terminal leaves the remote continuation running.
 
-Claude handoff v1 requires macOS/Linux, Python 3.9+, matching supported native Claude
-versions, the handoff-enabled Claude plugin on both machines, an enrolled SSH alias,
-and Claude authentication on the workstation. It preserves original local work and
-carries paired Alis build/Define repos, local commits and non-ignored uncommitted files.
-Submodules, live processes, ignored dependencies/secrets and reverse transfer are unsupported.
+Keep the laptop awake and connected until `safe_to_close: true`. A queued job,
+uploaded archive, created pane, summary, or unreachable destination is not an
+acceptance receipt. Normal remote workspace trust and permission prompts apply.
+Unknown remote status never permits a duplicate local continuation. Cancellation
+releases the source claim only after remote process exit is acknowledged.
+
+Live OS processes are not migrated. Preserve active Alis operation IDs and resume
+their monitoring; do not repeat Define, Build, Deploy, or uncertain external
+actions. Unknown local background work blocks transfer. Matching CLI, workstation
+runtime, agent plugins and destination authentication are required; installing
+this Cursor plugin alone does not enable automatic Cursor handoff.
