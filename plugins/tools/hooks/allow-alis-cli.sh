@@ -88,6 +88,22 @@ if [ "$sub" = "blocks" ] || [ "$sub" = "block" ]; then
   esac
 fi
 
+# Commands that print or write environment secret values ask too (ticket
+# 4531a10b): `environment variables|vars` print every value on CLIs before
+# 1.146.1 and behind --reveal since, `refresh` writes or prints the .env, and
+# --reveal asks wherever it appears. The hook cannot see the CLI version, so
+# the bare verbs ask as well. Words are inspected in order, so a persistent
+# flag ahead of the verb (`alis environment --json variables`) cannot slip past.
+secret_msg="Prints or writes environment secret values into the transcript; the human must confirm this command (Alis Build plugin)."
+saw_env=0
+for word in $cmd; do
+  case "$word" in
+    environment | environments | env | envs) saw_env=1 ;;
+    variables | vars | refresh) [ "$saw_env" -eq 1 ] && ask "$secret_msg" ;;
+    --reveal | --reveal=*) ask "$secret_msg" ;;
+  esac
+done
+
 # Optional allowlist of subcommands.
 if [ -n "${ALIS_ALLOWED_SUBCMDS:-}" ]; then
   allowed=0
