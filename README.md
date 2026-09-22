@@ -14,7 +14,8 @@ Use this plugin to let Cursor work with Alis Build organisations, products, neur
 
 - A standing Define → Build → Deploy primer rule with quiet, local-first skill discovery — description-triggered `discover` and `capture` rules fire on your own words (`alis skills suggest|load|capture`), never on generic coding just because you are inside a workspace
 - Catalog metadata refreshed quietly at session start; the plugin never installs or prunes native user skills
-- Auto-approval of clean `alis …` CLI commands via a `beforeShellExecution` hook, with `--confirm-production` / `--approve` / `blocks uninstall --yes` always prompting (double-keyed)
+- Auto-approval of clean `alis …` CLI commands via a `beforeShellExecution` hook, with `--confirm-production` / `--approve` / `blocks uninstall --yes` and the secret-printing `environment variables|vars|refresh` / `--reveal` always prompting (double-keyed)
+- A `postToolUse` hook that warns the agent when a tool call carried secret-looking values (keys, connection strings, private keys, revealed environment values), so it never repeats them and tells you to rotate them; values never appear in the warning
 
 ## Before You Start
 
