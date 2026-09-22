@@ -16,6 +16,12 @@
         "command": "./allow-alis-cli.sh",
         "type": "command"
       }
+    ],
+    "postToolUse": [
+      {
+        "command": "./warn-secrets.sh",
+        "type": "command"
+      }
     ]
   }
 }
