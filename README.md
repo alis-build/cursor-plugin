@@ -55,6 +55,7 @@ This plugin includes description-triggered Cursor rules for Alis Build workflows
 
 - **`discover`** — finds and loads the right Alis Build skill for what you want to do — local-first: it probes the local catalog (`alis skills suggest --json`, ~40ms, no network), loads a registry skill only on a distinctive match, and stays quiet otherwise (`alis skills search` is reserved for explicit "find me a skill" asks). Cursor applies it when your request touches the platform — describe the goal in your own words; no wake word is needed. It does not fire on generic coding (Makefiles, ordinary bugs, tests, git) just because you are inside a workspace.
 - **`capture`** — turns work just completed in the session into a reusable skill for your team. Say "capture this as a skill" (or "make this a skill" / "skillify this").
+- **`frontend-preview`** — shows a service's web frontend in [terminal-browser](https://terminal-browser.com), a real browser drawn in a terminal pane beside the agent, and drives it (`alis preview --json`, then `terminal-browser action` to snapshot, click, fill and read the console; `--ssh alis-<org>-<id>` for a workstation's dev server). Needs terminal-browser and a kitty-graphics terminal that can split (Ghostty, kitty, WezTerm, tmux or herdr), so it is for the Cursor CLI agent in such a terminal; inside the Cursor IDE the rule points the agent at Cursor's own browser instead. Never used for logs or operation status.
 - **`getting-started`** — say "Use the getting-started skill to help me get started on Alis Build."
 
 ## Validate
