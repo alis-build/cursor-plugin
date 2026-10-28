@@ -3,7 +3,7 @@ description: Turn work just completed in this session into a reusable Alis Build
 alwaysApply: false
 ---
 
-Turn what was just done in this session into a reusable Alis Build skill. Think "record a macro after doing the steps by hand": generalize the steps, not the session.
+Turn what was just done in this session into a reusable Alis Build skill. Think "record a macro after doing the steps by hand": generalise the steps, not the session.
 
 1. **Dedupe first.** Search before creating: `alis skills search "<what the work accomplished>" --json`. On a close match, do NOT create a near-duplicate. Offer instead to load the existing skill (`alis skills load <id> --via dispatcher`), improve it if the user owns it (`alis skills edit <id>`), or send feedback to its owner (`alis skills feedback <id>`).
 
@@ -13,9 +13,9 @@ Turn what was just done in this session into a reusable Alis Build skill. Think 
 
 4. **Distill into the workspace.** Write the files at the returned path:
    - Generalized, reusable steps with decision points and verification steps — NOT a session log.
-   - Parameterize specifics: `<project-id>`, `<service>`, `<org>`.
-   - Scrub: absolute/home paths, emails, org/project ids, tokens/keys, internal URLs.
-   - Description rubric: first clause says what the skill does; then "Use when ..." with trigger phrases. This text is both the harness trigger and the search-ranking surface — write it for both.
+   - Parameterise specifics: `<project-id>`, `<service>`, `<org>`.
+   - Scrub: absolute/home paths, emails, build environment/project IDs, tokens/keys, internal URLs.
+   - Description rubric: first clause says what the skill does; then "Use when ..." with trigger phrases. This text is both the coding agent trigger and the search-ranking surface — write it for both.
    - Optionally add `references/` files for a scrubbed worked example.
    - **Code is not a reference.** If the practice needs a buildable foundation (a
      template tree, a Dockerfile, Terraform, a server), do not put it under the skill for
@@ -27,7 +27,7 @@ Turn what was just done in this session into a reusable Alis Build skill. Think 
      `alis skills apply <id> --into <folder>` (optionally with a `generator.yaml` declaring
      inputs), never to copy files one by one.
 
-5. **Write the eval while ground truth is fresh.** Fill `evals/cases.yaml` with 1-2 cases whose prompt is a generalized version of the task actually just done.
+5. **Write the eval while ground truth is fresh.** Fill `evals/cases.yaml` with 1-2 cases whose prompt is a generalised version of the task actually just done.
 
 6. **Review in-session.** Show the user the frontmatter description and the step headings (not the whole file); iterate on their comments. Mention that the workspace persists at `~/.alis/skills/workspaces/<id>/` and can be continued later via `alis skills open <id>` or the TUI walkthrough.
 

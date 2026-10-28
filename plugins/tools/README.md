@@ -7,7 +7,7 @@ Connect Cursor to Alis Build through the `alis` CLI and workspace-aware build an
 - A standing Define → Build → Deploy primer rule (`alwaysApply`) that gives Cursor the Alis Build mental model, the skills contract, and the CLI-first execution contract every session
 - Description-triggered `discover` and `capture` rules: `discover` finds and loads the right registry skill when a request touches the platform — local-first (`alis skills suggest --json` probe, distinctive-score gate, registry search only on explicit asks); `capture` saves work just completed in the session as a reusable team skill (`alis skills capture`)
 - A `sessionStart` hook that, when a session opens inside an Alis Build service folder (`~/alis.build/<org>/build|define/…`), injects the package id and a pointer to the matching definitions ⇄ implementation counterpart
-- A `sessionStart` hook that refreshes cached catalog metadata with `alis skills sync --cache-only`; it never installs or prunes native user skills
+- A `sessionStart` hook that refreshes cached catalogue metadata with `alis skills sync --cache-only`; it never installs or prunes native user skills
 - A `beforeShellExecution` hook that auto-approves clean, single `alis …` commands so the agent can run the Alis Build CLI without a prompt on every call — chained/redirected commands defer to Cursor's normal permission flow, and `--confirm-production`, `--approve`, `blocks uninstall --yes`, and the commands that print or write environment secret values (`environment|env variables|vars|refresh`, any `--reveal`; the CLI masks values by default since 1.146.1, but the hook cannot see the CLI version) always prompt (deliberate double-keying). Restrict with a space-separated `ALIS_ALLOWED_SUBCMDS` allowlist if desired. The hook also records the pending command at `~/.alis/agent-approval.json` for the CLI's approval gate (audit only on Cursor — Cursor exposes no permission-mode signal, so the CLI never treats it as a standing grant)
 - A `postToolUse` hook (`warn-secrets.sh`) that looks for secret-looking values in every tool call's result and arguments (Stripe, GitHub, npm, PyPI, Linear, SendGrid, AWS, Google and Slack keys, connection strings with passwords, private keys, `NAME=value` lines whose upper-case name says secret, and every row an `alis environment … --reveal` printed). A hit cannot be unprinted, so the hook tells the agent which kinds landed, not to repeat them, and to tell you they need rotating (`additional_context`, Cursor's only channel there). Values never appear in the warning, and a value already warned about in the conversation (hashes under `~/.alis/claude-secrets-seen/<conversation>`) is not warned about again. `secrets-hook.py` is a verbatim copy of the Claude plugin's scanner; sync it with the primer
 
@@ -23,7 +23,7 @@ differences are limited to the rule frontmatter and the Skills section naming th
 `discover` / `capture` rules (Claude names `alis:discover` / `alis:capture`
 skills). Sync the body on each claude-plugin primer release.
 
-One Claude-plugin behavior is deliberately not ported: Claude ships the primer through a
+One Claude-plugin behaviour is deliberately not ported: Claude ships the primer through a
 workspace-gated `SessionStart` hook (full primer inside `~/alis.build/…`, a short digest
 elsewhere, nothing without the CLI). Cursor delivers the primer as an `alwaysApply` rule,
 and rule frontmatter (`description`, `globs`, `alwaysApply`) cannot test where the
@@ -37,7 +37,7 @@ You need:
 
 - Cursor with plugin support
 - The `alis` CLI installed, on your `PATH`, and signed in (`alis login`)
-- An Alis Build account with access to the organisations and products you want to use
+- An Alis Build account with access to the build environments and products you want to use
 
 ## Use It
 
@@ -48,7 +48,7 @@ Add a search endpoint to my orders service.
 ```
 
 ```text
-Use Alis Build to list the organisations I can access.
+Use Alis Build to list the build environments I can access.
 ```
 
 ```text
@@ -63,7 +63,7 @@ Use Alis Build to review the latest failed build or deploy logs and suggest the 
 
 This plugin includes description-triggered Cursor rules for Alis Build workflows:
 
-- **`discover`** — finds and loads the right Alis Build skill for what you want to do — local-first: it probes the local catalog (`alis skills suggest --json`, ~40ms, no network), loads a registry skill only on a distinctive match, and stays quiet otherwise (`alis skills search` is reserved for explicit "find me a skill" asks). Cursor applies it when your request touches the platform — describe the goal in your own words; no wake word is needed. It does not fire on generic coding (Makefiles, ordinary bugs, tests, git) just because you are inside a workspace.
+- **`discover`** — finds and loads the right Alis Build skill for what you want to do — local-first: it probes the local catalogue (`alis skills suggest --json`, ~40ms, no network), loads a registry skill only on a distinctive match, and stays quiet otherwise (`alis skills search` is reserved for explicit "find me a skill" asks). Cursor applies it when your request touches the platform — describe the goal in your own words; no wake word is needed. It does not fire on generic coding (Makefiles, ordinary bugs, tests, git) just because you are inside a workspace.
 - **`capture`** — turns work just completed in the session into a reusable skill for your team. Say "capture this as a skill" (or "make this a skill" / "skillify this").
 - **`frontend-preview`** — shows a service's web frontend in the browser the agent's own tools drive and checks it there (`alis preview --json` for the address, then Cursor's browser or a Playwright MCP to inspect, click and read the console in the user's own browser). The CLI installs and launches nothing; on a workstation the shell's Chrome pane shows the browser the agent drives. Never used for logs or operation status.
 - **`getting-started`** — say "Use the getting-started skill to help me get started on Alis Build."

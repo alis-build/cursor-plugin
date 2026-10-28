@@ -1,4 +1,7 @@
-# Alis Build Cursor Plugin
+# Alis Build plugin for Cursor
+
+This prepared update aligns terminology and artifact reading with the coordinated
+CLI copy pass (proposed CLI 1.174.2). Publish the CLI and plugins together.
 
 <p align="center">
   <img src="plugins/tools/assets/connectivity.svg" alt="Cursor connected to Alis Build" width="760">
@@ -8,12 +11,12 @@
   <strong>Connect Cursor to Alis Build.</strong>
 </p>
 
-Use this plugin to let Cursor work with Alis Build organisations, products, neurons, builds, and deploys through the `alis` CLI, with workspace-aware context injected into every session.
+Use this plugin to let Cursor work with build environments, products, services, builds, and deploys through the `alis` CLI, with workspace-aware context injected into every session.
 
 ## What You Get
 
 - A standing Define → Build → Deploy primer rule with quiet, local-first skill discovery — description-triggered `discover` and `capture` rules fire on your own words (`alis skills suggest|load|capture`), never on generic coding just because you are inside a workspace
-- Catalog metadata refreshed quietly at session start; the plugin never installs or prunes native user skills
+- Catalogue metadata refreshed quietly at session start; the plugin never installs or prunes native user skills
 - Auto-approval of clean `alis …` CLI commands via a `beforeShellExecution` hook, with `--confirm-production` / `--approve` / `blocks uninstall --yes` and the secret-printing `environment variables|vars|refresh` / `--reveal` always prompting (double-keyed)
 - A `postToolUse` hook that warns the agent when a tool call carried secret-looking values (keys, connection strings, private keys, revealed environment values), so it never repeats them and tells you to rotate them; values never appear in the warning
 
@@ -23,7 +26,7 @@ You need:
 
 - Cursor with plugin support
 - The `alis` CLI installed, on your `PATH`, and signed in (`alis login`)
-- An Alis Build account with access to the organisations and products you want to use
+- An Alis Build account with access to the build environments and products you want to use
 
 ## Install
 
@@ -38,7 +41,7 @@ Add a search endpoint to my orders service.
 ```
 
 ```text
-Use Alis Build to list the organisations I can access.
+Use Alis Build to list the build environments I can access.
 ```
 
 ```text
@@ -53,7 +56,7 @@ Use Alis Build to review the latest failed build or deploy logs and suggest the 
 
 This plugin includes description-triggered Cursor rules for Alis Build workflows:
 
-- **`discover`** — finds and loads the right Alis Build skill for what you want to do — local-first: it probes the local catalog (`alis skills suggest --json`, ~40ms, no network), loads a registry skill only on a distinctive match, and stays quiet otherwise (`alis skills search` is reserved for explicit "find me a skill" asks). Cursor applies it when your request touches the platform — describe the goal in your own words; no wake word is needed. It does not fire on generic coding (Makefiles, ordinary bugs, tests, git) just because you are inside a workspace.
+- **`discover`** — finds and loads the right Alis Build skill for what you want to do — local-first: it probes the local catalogue (`alis skills suggest --json`, ~40ms, no network), loads a registry skill only on a distinctive match, and stays quiet otherwise (`alis skills search` is reserved for explicit "find me a skill" asks). Cursor applies it when your request touches the platform — describe the goal in your own words; no wake word is needed. It does not fire on generic coding (Makefiles, ordinary bugs, tests, git) just because you are inside a workspace.
 - **`capture`** — turns work just completed in the session into a reusable skill for your team. Say "capture this as a skill" (or "make this a skill" / "skillify this").
 - **`frontend-preview`** — shows a service's web frontend in the browser the agent's own tools drive and checks it there (`alis preview --json` for the address, then Cursor's browser or a Playwright MCP to inspect, click and read the console in the user's own browser). The CLI installs and launches nothing; on a workstation the shell's Chrome pane shows the browser the agent drives. Never used for logs or operation status.
 - **`getting-started`** — say "Use the getting-started skill to help me get started on Alis Build."
@@ -64,9 +67,9 @@ This plugin includes description-triggered Cursor rules for Alis Build workflows
 node scripts/validate-template.mjs
 ```
 
-## Ticket reading and package setup
+## Conversation reading and package setup
 
-Read referenced support tickets before proposing changes: use
+Read referenced conversations before proposing changes: use
 `alis specialist get tickets/ID --json`, or find the title with
 `alis specialist tickets --state all --json`. Use `alis packages install`
 for private package setup during Build. Read command results and help in full.

@@ -79,7 +79,7 @@ add_protos() {  # append top-level *.proto basenames in $1, if any
 
 if [ "$side" = "build" ]; then
   add "This Cursor session is inside an Alis Build service implementation (build) directory."
-  [ -n "$pkg" ] && add "  Package id:  $pkg"
+  [ -n "$pkg" ] && add "  Package ID:  $pkg"
   if [ -d "$definedir" ]; then
     add "  The protobuf definitions (the API contract — the DBD \"Define\" step) are available here:"
     add "    $definedir"
@@ -89,7 +89,7 @@ if [ "$side" = "build" ]; then
   fi
 else  # define side
   add "This Cursor session is inside an Alis Build definitions (define) directory — the protobuf API contract."
-  [ -n "$pkg" ] && add "  Package id:  $pkg"
+  [ -n "$pkg" ] && add "  Package ID:  $pkg"
   add_protos "$dir"
   if [ -d "$builddir" ]; then
     add "  The implementation (the DBD \"Build\" step) is available here:"

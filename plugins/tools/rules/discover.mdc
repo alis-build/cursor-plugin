@@ -1,5 +1,5 @@
 ---
-description: Find and load the right Alis Build skill for platform-shaped work. Apply when the user says "alis", "hey alis", "ask alis to", or "find a skill for"; asks any Alis Build platform question; or the task names platform surfaces — deploy, ship, protobuf, proto, Define, neuron, product, block, landing zone, Spanner, protobundle, Pub/Sub, Terraform, infra, playground, packages, DBD, ADK. NOT for generic coding (Makefiles and local dev tooling, ordinary bugs, test authoring, git operations, reading logs) even inside an alis.build workspace — workspace presence alone is not a trigger — and not when a loaded Alis skill already covers the task.
+description: Find and load the right Alis Build skill for platform-shaped work. Apply when the user says "alis", "hey alis", "ask alis to", or "find a skill for"; asks any Alis Build platform question; or the task names platform surfaces — deploy, ship, protobuf, proto, Define, service, product, code block, build environment, Spanner, protobundle, Pub/Sub, Terraform, infra, playground, packages, DBD, ADK. NOT for generic coding (Makefiles and local dev tooling, ordinary bugs, test authoring, git operations, reading logs) even inside an alis.build workspace — workspace presence alone is not a trigger — and not when a loaded Alis skill already covers the task.
 alwaysApply: false
 ---
 
