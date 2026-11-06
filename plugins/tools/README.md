@@ -70,6 +70,11 @@ This plugin includes description-triggered Cursor rules for Alis Build workflows
 
 ## Troubleshooting
 
+The secret-warning hook checks for Python 3.9+ using `python3`, `python`,
+then `py -3`, skipping unusable Microsoft Store shortcuts on Windows. Without
+a supported runtime it quietly skips secret warnings. Restart Cursor after
+updating the plugin or changing Python's PATH.
+
 If the rules or hooks do not take effect, confirm the plugin install completed and reload Cursor.
 
 If `alis` commands fail with an auth error, run `alis login` (or `alis authorise <org>.<product>` for git/package credentials) and retry.

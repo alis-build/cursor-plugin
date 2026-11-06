@@ -9,7 +9,6 @@
 # have no trigger of their own).
 set -euo pipefail
 command -v jq >/dev/null 2>&1 || exit 0
-command -v python3 >/dev/null 2>&1 || exit 0
 payload=$(cat 2>/dev/null) || exit 0
 printf '%s' "$payload" | grep -qiE 'sk_(live|test)_|gh[oprsu]_|github_pat_|npm_|pypi-|lin_api_|SG\.|://|AKIA|AIza|xox[abpr]-|PRIVATE KEY|SECRET|TOKEN|PASSW|API_?KEY|alis (--\S+ )*(environment|environments|envs?) ' || exit 0
 classic=$(printf '%s' "$payload" | jq -c '
@@ -21,6 +20,7 @@ classic=$(printf '%s' "$payload" | jq -c '
       tool_input: (.tool_input // {}),
       tool_response: { stdout: ([$out | .. | strings] | join("\n")), stderr: "" }
     }' 2>/dev/null) || exit 0
-printf '%s' "$classic" | python3 -B "$(dirname "$0")/secrets-hook.py" \
+hook_dir=$(dirname "$0")
+printf '%s' "$classic" | "$hook_dir/run-python.sh" "$hook_dir/secrets-hook.py" \
   | jq -c '{additional_context: .hookSpecificOutput.additionalContext} | select(.additional_context != null)' 2>/dev/null || true
 exit 0
