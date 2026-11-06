@@ -82,13 +82,12 @@ For immediate guidance, read `alis docs specialist` and
 
 ## Troubleshooting
 
-On Windows, a Microsoft Store `python3` shortcut can exist even when it
-cannot run Python. The plugin checks for a working Python 3.9+ using
-`python3`, `python`, then `py -3`. Unusable shortcuts are skipped quietly.
-
-Without a supported Python runtime, secret warnings are unavailable; the other
-hooks continue normally. Restart Cursor after updating the plugin or changing
-Python's PATH.
+The plugin uses native hook protocol 1 in the `alis` binary. Upgrade the CLI
+first with `alis upgrade`; `alis hooks capabilities` must report `"protocol":1`.
+Restart the coding agent after updating. Python is not a runtime dependency.
+Older CLIs receive one startup upgrade notice; optional native checks wait for
+the upgrade, and existing handoff claims remain fenced by the compatibility
+adapter. Bash and `jq` are still used by the other plugin hooks.
 
 If the rules or hooks do not take effect, confirm the plugin install completed and reload Cursor.
 
@@ -112,3 +111,9 @@ Start supported transfers inside the corresponding source agent with its matchin
 Alis plugin. Keep the laptop awake until `safe_to_close: true`; upload or pane
 creation alone is insufficient. The remote continuation survives closing its
 browser terminal. Matching CLI and workstation runtime releases are required.
+
+## Native hook development checks
+
+Run `ALIS_TEST_CLI=/absolute/path/to/alis-dev python3 -B tests/test_native_hooks.py`
+to check the bridges against a built CLI with Python absent from the hook PATH.
+Python is only a development test runner. Native handler tests live in the CLI.
