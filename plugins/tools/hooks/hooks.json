@@ -3,6 +3,10 @@
   "hooks": {
     "sessionStart": [
       {
+        "type": "command",
+        "command": "./check-cli.sh"
+      },
+      {
         "command": "./inject-service-context.sh",
         "type": "command"
       },

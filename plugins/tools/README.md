@@ -9,7 +9,7 @@ Connect Cursor to Alis Build through the `alis` CLI and workspace-aware build an
 - A `sessionStart` hook that, when a session opens inside an Alis Build service folder (`~/alis.build/<org>/build|define/…`), injects the package id and a pointer to the matching definitions ⇄ implementation counterpart
 - A `sessionStart` hook that refreshes cached catalogue metadata with `alis skills sync --cache-only`; it never installs or prunes native user skills
 - A `beforeShellExecution` hook that auto-approves clean, single `alis …` commands so the agent can run the Alis Build CLI without a prompt on every call — chained/redirected commands defer to Cursor's normal permission flow, and `--confirm-production`, `--approve`, `blocks uninstall --yes`, and the commands that print or write environment secret values (`environment|env variables|vars|refresh`, any `--reveal`; the CLI masks values by default since 1.146.1, but the hook cannot see the CLI version) always prompt (deliberate double-keying). Restrict with a space-separated `ALIS_ALLOWED_SUBCMDS` allowlist if desired. The hook also records the pending command at `~/.alis/agent-approval.json` for the CLI's approval gate (audit only on Cursor — Cursor exposes no permission-mode signal, so the CLI never treats it as a standing grant)
-- A `postToolUse` hook (`warn-secrets.sh`) that looks for secret-looking values in every tool call's result and arguments (Stripe, GitHub, npm, PyPI, Linear, SendGrid, AWS, Google and Slack keys, connection strings with passwords, private keys, `NAME=value` lines whose upper-case name says secret, and every row an `alis environment … --reveal` printed). A hit cannot be unprinted, so the hook tells the agent which kinds landed, not to repeat them, and to tell you they need rotating (`additional_context`, Cursor's only channel there). Values never appear in the warning, and a value already warned about in the conversation (hashes under `~/.alis/claude-secrets-seen/<conversation>`) is not warned about again. `secrets-hook.py` is a verbatim copy of the Claude plugin's scanner; sync it with the primer
+- A `postToolUse` hook (`warn-secrets.sh`) that looks for secret-looking values in every tool call's result and arguments (Stripe, GitHub, npm, PyPI, Linear, SendGrid, AWS, Google and Slack keys, connection strings with passwords, private keys, `NAME=value` lines whose upper-case name says secret, and every row an `alis environment … --reveal` printed). A hit cannot be unprinted, so the hook tells the agent which kinds landed, not to repeat them, and to tell you they need rotating (`additional_context`, Cursor's only channel there). Values never appear in the warning, and a value already warned about in the conversation (hashes under `~/.alis/cursor-secrets-seen/<conversation>`) is not warned about again. The scanner and Cursor payload mapping live in the `alis` binary
 
 ## Primer sync
 
@@ -70,10 +70,12 @@ This plugin includes description-triggered Cursor rules for Alis Build workflows
 
 ## Troubleshooting
 
-The secret-warning hook checks for Python 3.9+ using `python3`, `python`,
-then `py -3`, skipping unusable Microsoft Store shortcuts on Windows. Without
-a supported runtime it quietly skips secret warnings. Restart Cursor after
-updating the plugin or changing Python's PATH.
+The plugin uses native hook protocol 1 in the `alis` binary. Upgrade the CLI
+first with `alis upgrade`; `alis hooks capabilities` must report `"protocol":1`.
+Restart the coding agent after updating. Python is not a runtime dependency.
+Older CLIs receive one startup upgrade notice; optional native checks wait for
+the upgrade, and existing handoff claims remain fenced by the compatibility
+adapter. Bash and `jq` are still used by the other plugin hooks.
 
 If the rules or hooks do not take effect, confirm the plugin install completed and reload Cursor.
 
