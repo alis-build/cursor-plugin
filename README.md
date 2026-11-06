@@ -65,6 +65,7 @@ This plugin includes description-triggered Cursor rules for Alis Build workflows
 
 ```sh
 node scripts/validate-template.mjs
+for test in plugins/tools/hooks/*.test.sh; do bash "$test"; done
 ```
 
 ## Conversation reading and package setup
@@ -80,6 +81,14 @@ For immediate guidance, read `alis docs specialist` and
 `alis packages install --help`.
 
 ## Troubleshooting
+
+On Windows, a Microsoft Store `python3` shortcut can exist even when it
+cannot run Python. The plugin checks for a working Python 3.9+ using
+`python3`, `python`, then `py -3`. Unusable shortcuts are skipped quietly.
+
+Without a supported Python runtime, secret warnings are unavailable; the other
+hooks continue normally. Restart Cursor after updating the plugin or changing
+Python's PATH.
 
 If the rules or hooks do not take effect, confirm the plugin install completed and reload Cursor.
 
