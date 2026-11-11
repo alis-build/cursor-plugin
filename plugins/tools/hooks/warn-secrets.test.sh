@@ -55,7 +55,8 @@ jq -nc --arg n "npm_FAKEFAKEFAKEFAKEFAKEFAKEFAKEFAKE0000" '{conversation_id:"s4"
 [ -z "$(printf '{"conversation_id":"s5","tool_name":"Shell"}' | HOME="$test_home" bash "$hook")" ]
 [ -z "$(printf 'not json' | HOME="$test_home" bash "$hook")" ]
 
-# The hook is registered on postToolUse.
-jq -e 'any(.hooks.postToolUse[]; .command == "./warn-secrets.sh")' "$dir/hooks.json" >/dev/null || {
-  echo 'warn-secrets.sh must run on postToolUse' >&2; exit 1; }
+# The warning goes out through post-tool-use.sh, which is what postToolUse runs.
+jq -e 'any(.hooks.postToolUse[]; .command == "./post-tool-use.sh")' "$dir/hooks.json" >/dev/null || {
+  echo 'post-tool-use.sh must run on postToolUse' >&2; exit 1; }
+grep -q 'warn-secrets.sh' "$dir/post-tool-use.sh" || { echo 'post-tool-use.sh must run warn-secrets.sh' >&2; exit 1; }
 echo 'warn-secrets behavior: OK'

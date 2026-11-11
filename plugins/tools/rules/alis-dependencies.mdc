@@ -1,0 +1,22 @@
+---
+description: Alis Build dependency pins: managed with alis packages, never by hand.
+globs: **/go.mod,**/go.sum,**/package.json
+alwaysApply: false
+---
+
+# Alis Build — dependency pins
+
+Applies to dependency manifests inside an Alis Build workspace (a path under
+`~/alis.build`). Ignore this rule elsewhere.
+
+- Never hand-edit pins for Alis-defined packages, and never assemble `GOPROXY`
+  or registry settings by hand. That is the main reason `go mod tidy` and
+  `pnpm install` fail here.
+- `alis packages install <pkg> --language go --json` (or the relevant language)
+  refreshes registry credentials and runs the right package manager.
+  `alis packages upgrade` bumps Alis-defined dependencies (`--all` for every
+  module, `--to <version>` to pin).
+- Installing fetches the service's latest definition; pass
+  `--version <version>` to keep a specific one.
+- If a download still fails, read the actual error and run `alis doctor --json`.
+  Never bypass a TLS failure or edit stored credentials.

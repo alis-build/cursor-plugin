@@ -23,8 +23,15 @@
     ],
     "postToolUse": [
       {
-        "command": "./warn-secrets.sh",
+        "command": "./post-tool-use.sh",
         "type": "command"
+      }
+    ],
+    "beforeSubmitPrompt": [
+      {
+        "command": "./suggest-skills.sh",
+        "type": "command",
+        "timeout": 5
       }
     ]
   }
