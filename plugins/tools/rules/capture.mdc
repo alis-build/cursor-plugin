@@ -7,15 +7,15 @@ Turn what was just done in this session into a reusable Alis Build skill. Think 
 
 1. **Dedupe first.** Search before creating: `alis skills search "<what the work accomplished>" --json`. On a close match, do NOT create a near-duplicate. Offer instead to load the existing skill (`alis skills load <id> --via dispatcher`), improve it if the user owns it (`alis skills edit <id>`), or send feedback to its owner (`alis skills feedback <id>`).
 
-2. **Confirm scope once.** Propose a skill id (lowercase-hyphen) and a one-line description. Ask ONE confirmation covering both the id and what the skill should and should not cover. Do not iterate on naming before registering.
+2. **Confirm scope once.** Propose a skill id (lowercase-hyphen) and the opening sentence saying what the reader gets. Ask ONE confirmation covering both the id and what the skill should and should not cover. Do not iterate on naming before registering.
 
-3. **Register the draft**: `alis skills capture <id> --name "<Display Name>" --description "<description>" --json`. This reserves the draft in the registry and returns the workspace path. If the `capture` subcommand is unavailable, fall back to `alis skills create` with the same flags.
+3. **Register the draft** with the full description from step 4. `alis skills capture <id> --name "<Display Name>" --description "<description>" --json`. This reserves the draft in the registry and returns the workspace path. If the `capture` subcommand is unavailable, fall back to `alis skills create` with the same flags.
 
 4. **Distill into the workspace.** Write the files at the returned path:
    - Generalized, reusable steps with decision points and verification steps — NOT a session log.
    - Parameterise specifics: `<project-id>`, `<service>`, `<org>`.
    - Scrub: absolute/home paths, emails, build environment/project IDs, tokens/keys, internal URLs.
-   - Description rubric: first clause says what the skill does; then "Use when ..." with trigger phrases. This text is both the coding agent trigger and the search-ranking surface — write it for both.
+   - For the registered description and the SKILL.md front matter, use the same text. Start with one plain sentence of at most 25 words saying what the reader gets. Explain how the skill works and what it works on. Finish with “Use when …” or “Use for …” and double-quote the phrases people would type. Keep the full description within 1,024 characters.
    - Optionally add `references/` files for a scrubbed worked example.
    - **Code is not a reference.** If the practice needs a buildable foundation (a
      template tree, a Dockerfile, Terraform, a server), do not put it under the skill for
